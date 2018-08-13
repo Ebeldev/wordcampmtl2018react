@@ -3,13 +3,16 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
 
+import Card from './Card';
+
 const Get_Posts = gql`
 	{
-		posts(first:2){
+		posts(first:5){
          	edges {
            		node{
-             		title,
-             		slug,
+           			postId
+             		title
+             		slug
              		categories {
 		               edges {
 		                 node {
@@ -17,6 +20,9 @@ const Get_Posts = gql`
 		                 }
 		               }
              		}
+             		featuredImage {
+		          		sourceUrl
+		        	}
           		 }
          	}
        	}
@@ -29,13 +35,19 @@ const Posts = () => (
 		({ loading, error, data}) => {
 			if(loading) return "Loading...";
 			if(error) return `Error! ${error.message}`;
-// console.log(data.posts);
-// console.log(data.posts.edges);
+
 			return( 
-				<div>
+				<div style={FlexDiv}>
+
 					{
-						data.posts.edges.map(node => (
-							console.log(node.node)
+						data.posts.edges.map( ( edge, i ) => (
+							<Card 
+								key = {i} 
+								id = {edge.node.postId}
+								slug = {edge.node.slug} 
+								title = {edge.node.title} 
+								url = {edge.node.featuredImage.sourceUrl}
+							/>
 						))
 
 					}
@@ -47,3 +59,7 @@ const Posts = () => (
 );
 
 export default Posts;
+const FlexDiv = {
+	display: 'flex',
+	flexWrap: 'wrap'
+}

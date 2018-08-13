@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import Home from "./Components/Home";
 import Posts from "./Components/Posts";
-// import Dogs from "./Components/Dogs";
-// import Query from "./Components/Posts";
 
 const client = new ApolloClient({
   uri: "http://localhost/wordcamp2018/graphql"
-   // uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
 });
 
 class App extends Component {
@@ -23,23 +20,16 @@ class App extends Component {
       <ApolloProvider client={client}>
         <Router>
           <div>
-            
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
+            <ul style={MenuStyle}>
+              <li style={LiStyle}>
+                <Link to="/" style={AStyle}>Home</Link>
               </li>
-              <li>
-                <Link to="/posts">Posts</Link>
-              </li>
-              <li>
-                {/*<Link to="/dogs">dogs</Link>*/}
+              <li style={LiStyle}>
+                <Link to="/posts" style={AStyle}>Posts</Link>
               </li>
             </ul>
-            <Route path="/" component={Home}/>
-            {/*<Route path="/dogs" component={Dogs}/>*/}
+            <Route exact path="/" component={Home}/>
             <Route path="/posts" component={Posts}/>
-            {/*<Route path="/posts" component={Posts}/>*/}
-
           </div>
         </Router>
       </ApolloProvider>  
@@ -48,3 +38,18 @@ class App extends Component {
 }
 
 export default App;
+
+const MenuStyle = {
+  listStyleType: 'none',
+  display: 'flex',
+  backgroundColor: '#E10098',
+  padding: '15px'
+}
+
+const LiStyle = {
+  marginRight: '20px',
+}
+
+const AStyle = {
+  color: 'white'
+}
